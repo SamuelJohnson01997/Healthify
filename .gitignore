@@ -26,3 +26,7 @@
 hs_err_pid*
 replay_pid*
 api/gradle/wrapper/gradle-wrapper.jar
+
+/app/backend/node_modules
+/app/*/node_modules
+/app/node_modules
