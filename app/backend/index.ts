@@ -39,6 +39,10 @@ app.get("/tenants", async (req, res) => {
     res.send(tenants);
 });
 
+app.get("/sammie", async(req, res) => {
+    res.send("HELLO SAMMIE")
+});
+
 // In case of session related errors, this error handler
 // returns 401 to the client.
 app.use(errorHandler());

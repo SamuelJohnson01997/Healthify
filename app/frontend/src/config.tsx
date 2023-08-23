@@ -32,8 +32,4 @@ export const SuperTokensConfig = {
     ],
 };
 
-export const recipeDetails = {
-    docsLink: "https://supertokens.com/docs/thirdpartyemailpassword/introduction",
-};
-
 export const PreBuiltUIList = [ThirdPartyEmailPasswordPreBuiltUI];
