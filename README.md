@@ -1,12 +1,8 @@
 # OpenHealthify
 
-
 ### Tech stack used
-* Java 17
-* Kotlin 1.8.22
-* Gradle - 8.2.1
-* Node (Next.js) - v18.12.1 
+* Node (Next.js) >= v14.21.3
 
-### Steps to run UI
-* cd ./frontend/openhealthify
-* npm run dev
+### Steps to run UI and Backend
+* cd ./app
+* npm run start
