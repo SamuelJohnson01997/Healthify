@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "supertokens-auth-react/recipe/session";
 import CallAPIView from "./CallAPIView";
 import {CelebrateIcon, SeparatorLine, SignOutIcon } from "../assets/images";
+import { getApiDomain } from "../config";
+import axios from "axios";
+
 
 interface ILink {
     name: string;
@@ -19,6 +22,13 @@ export default function SuccessView(props: { userId: string }) {
         navigate("/auth");
     }
 
+    async function deleteUserClicked() {
+        let response = await axios.get(getApiDomain() + "/deleteUser");
+        await signOut();
+        navigate("/auth");
+    }
+
+
     function openLink(url: string) {
         window.open(url, "_blank");
     }
@@ -27,6 +37,11 @@ export default function SuccessView(props: { userId: string }) {
         {
             name: "Sign Out",
             onClick: logoutClicked,
+            icon: SignOutIcon,
+        },
+        {
+            name: "Delete user",
+            onClick: deleteUserClicked,
             icon: SignOutIcon,
         },
     ];

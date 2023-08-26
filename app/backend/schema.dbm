@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.0.5" use-changelog="false" last-position="650,3" last-zoom="1" max-obj-count="15"
+	 default-schema="public"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="openhealthify" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="profile" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<position x="60" y="280"/>
+	<column name="profile_id" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="varchar" length="64"/>
+	</column>
+	<column name="date_of_birth">
+		<type name="date" length="0"/>
+	</column>
+	<column name="location">
+		<type name="text" length="0"/>
+	</column>
+	<column name="phone_no">
+		<type name="text" length="0"/>
+	</column>
+	<column name="bio">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="profile_pk" type="pk-constr" table="public.profile">
+		<columns names="profile_id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="body_metrics_id" index="7"/>
+		<object name="goals_id" index="6"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="body_metrics_fk" index="3"/>
+		<object name="goals_fk" index="1"/>
+		<object name="profile_uq" index="2"/>
+		<object name="profile_uq1" index="4"/>
+	</customidxs>
+</table>
+
+<table name="body_metrics" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<position x="540" y="140"/>
+	<column name="body_metrics_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="height">
+		<type name="float" length="0"/>
+	</column>
+	<column name="weight">
+		<type name="float" length="0"/>
+	</column>
+	<column name="activity_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="medical_conditions">
+		<type name="smallint" length="0" dimension="1"/>
+	</column>
+	<column name="maintenance_calories">
+		<type name="float" length="0"/>
+	</column>
+	<constraint name="body_metrics_pk" type="pk-constr" table="public.body_metrics">
+		<columns names="body_metrics_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="goals" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<position x="60" y="80"/>
+	<column name="goals_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="target_weight">
+		<type name="float" length="0"/>
+	</column>
+	<column name="goal_pace">
+		<type name="float" length="0"/>
+	</column>
+	<constraint name="goals_pk" type="pk-constr" table="public.goals">
+		<columns names="goals_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="profile_has_one_goals" type="rel11" layers="0"
+	 src-col-pattern="{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#c32b37"
+	 src-table="public.goals"
+	 dst-table="public.profile"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="profile_has_one_body_metric" type="rel11" layers="0"
+	 src-col-pattern="{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#3ad206"
+	 src-table="public.body_metrics"
+	 dst-table="public.profile"
+	 src-required="false" dst-required="false"/>
+
+<table name="day_entry" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<position x="520" y="520"/>
+	<column name="entry_date" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="day_entry_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<constraint name="day_entry_pk" type="pk-constr" table="public.day_entry">
+		<columns names="day_entry_id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="breakfast" index="3"/>
+		<object name="dinner" index="7"/>
+		<object name="evening_snacks" index="6"/>
+		<object name="lunch" index="5"/>
+		<object name="morning_snacks" index="4"/>
+		<object name="profile_id" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="day_entry_uq" index="1"/>
+		<object name="meal_fk" index="3"/>
+		<object name="meal_fk1" index="4"/>
+		<object name="meal_fk2" index="5"/>
+		<object name="meal_fk3" index="6"/>
+		<object name="meal_fk4" index="7"/>
+		<object name="profile_fk" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="day_entry_has_one_profile" type="rel11" layers="0"
+	 src-col-pattern="{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#1afde7"
+	 src-table="public.profile"
+	 dst-table="public.day_entry"
+	 src-required="false" dst-required="false"/>
+
+<table name="meal" layers="0" collapse-mode="2" max-obj-count="1" z-value="0">
+	<schema name="public"/>
+	<position x="1300" y="620"/>
+	<column name="meal_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<constraint name="meal_pk" type="pk-constr" table="public.meal">
+		<columns names="meal_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="breakfast_entry" type="rel1n" layers="0"
+	 src-col-pattern="breakfast"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#f0597d"
+	 src-table="public.meal"
+	 dst-table="public.day_entry"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="morning_snacks_entry" type="rel1n" layers="0"
+	 src-col-pattern="morning_snacks"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#2a4097"
+	 src-table="public.meal"
+	 dst-table="public.day_entry"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="lunch_entry" type="rel1n" layers="0"
+	 src-col-pattern="lunch"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#fb1473"
+	 src-table="public.meal"
+	 dst-table="public.day_entry"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="evening_snacks_entry" type="rel1n" layers="0"
+	 src-col-pattern="evening_snacks"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#5e27ed"
+	 src-table="public.meal"
+	 dst-table="public.day_entry"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="dinner_entry" type="rel1n" layers="0"
+	 src-col-pattern="dinner"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#08c3a6"
+	 src-table="public.meal"
+	 dst-table="public.day_entry"
+	 src-required="false" dst-required="false"/>
+
+<table name="meal_detail" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<position x="1120" y="160"/>
+	<column name="meal_detail_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="quantity">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="measure_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="meal_detail_pk" type="pk-constr" table="public.meal_detail">
+		<columns names="meal_detail_id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="item_id" index="4"/>
+		<object name="meal_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="item_fk" index="2"/>
+		<object name="meal_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="meal_has_many_meal_detail" type="rel1n" layers="0"
+	 src-col-pattern="{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#9196bc"
+	 src-table="public.meal"
+	 dst-table="public.meal_detail"
+	 src-required="false" dst-required="false"/>
+
+<table name="item" layers="0" collapse-mode="2" max-obj-count="14" z-value="0">
+	<schema name="public"/>
+	<position x="780" y="340"/>
+	<column name="item_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="name">
+		<type name="varchar" length="64"/>
+	</column>
+	<column name="description">
+		<type name="varchar" length="500"/>
+	</column>
+	<column name="protein">
+		<type name="float" length="0"/>
+	</column>
+	<column name="carbohydrate">
+		<type name="float" length="0"/>
+	</column>
+	<column name="fat">
+		<type name="float" length="0"/>
+	</column>
+	<column name="micro_nutrients">
+		<type name="jsonb" length="0"/>
+	</column>
+	<column name="category">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="cuisine">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="allowed_measures">
+		<type name="smallint" length="0" dimension="1"/>
+	</column>
+	<column name="is_recipe">
+		<type name="boolean" length="0"/>
+	</column>
+	<constraint name="item_pk" type="pk-constr" table="public.item">
+		<columns names="item_id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="added_by" index="11"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="profile_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="item_has_many_meal_detail" type="rel1n" layers="0"
+	 src-col-pattern="{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#ec1489"
+	 src-table="public.item"
+	 dst-table="public.meal_detail"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="profile_has_many_item" type="rel1n" layers="0"
+	 src-col-pattern="added_by"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#e79d87"
+	 src-table="public.profile"
+	 dst-table="public.item"
+	 src-required="false" dst-required="false"/>
+
+<table name="recipe_ingredients" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<position x="820" y="20"/>
+	<column name="priority">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="quantity">
+		<type name="float" length="0"/>
+	</column>
+	<column name="measure">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="metadata">
+		<type name="jsonb" length="0"/>
+	</column>
+
+	<customidxs object-type="column">
+		<object name="ingredient_id" index="5"/>
+		<object name="recipe_id" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="item_fk" index="0"/>
+		<object name="item_fk1" index="2"/>
+		<object name="recipe_ingredients_uq" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="recipe_ingredients_has_one_item" type="rel11" layers="0"
+	 src-col-pattern="recipe_id"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#69e68b"
+	 src-table="public.item"
+	 dst-table="public.recipe_ingredients"
+	 src-required="false" dst-required="false">
+	<special-pk-cols indexes="0"/>
+</relationship>
+
+<relationship name="recipe_has_many_ingredients" type="rel1n" layers="0"
+	 src-col-pattern="ingredient_id"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#fb4f6a"
+	 src-table="public.item"
+	 dst-table="public.recipe_ingredients"
+	 src-required="false" dst-required="false">
+	<constraint name="recipe_ingredients_pk" type="pk-constr" alias="recipe_ingredients_pk" protected="true" table="public.recipe_ingredients">
+		</constraint>
+	<special-pk-cols indexes="0"/>
+</relationship>
+
+</dbmodel>

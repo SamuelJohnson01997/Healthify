@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import supertokens from "supertokens-node";
+import supertokens, { deleteUser } from "supertokens-node";
 import { verifySession } from "supertokens-node/recipe/session/framework/express";
 import { middleware, errorHandler, SessionRequest } from "supertokens-node/framework/express";
 import { getWebsiteDomain, SuperTokensConfig } from "./config";
@@ -39,8 +39,10 @@ app.get("/tenants", async (req, res) => {
     res.send(tenants);
 });
 
-app.get("/sammie", async(req, res) => {
-    res.send("HELLO SAMMIE")
+app.get("/deleteUser", verifySession(), async(req: SessionRequest, res) => {
+    let userId = req.session!.getUserId()
+    await deleteUser(userId);
+    res.send("Done")
 });
 
 // In case of session related errors, this error handler
