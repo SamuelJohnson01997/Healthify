@@ -23,7 +23,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Build
-      working-directory: src/backend
+      working-directory: app/backend
       run: |
         npm install
         npx webpack
