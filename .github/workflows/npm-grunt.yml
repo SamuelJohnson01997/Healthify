@@ -26,4 +26,3 @@ jobs:
       working-directory: app/backend
       run: |
         npm install
-        grunt
